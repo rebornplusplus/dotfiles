@@ -1,0 +1,142 @@
+" vimrc for reborn++
+" Aug 2020
+
+" {{{ references
+" Stuffs to follow:
+" > Don't put any lines in your vimrc that you don't understand.
+" - https://medium.com/actualize-network/how-to-learn-vim-a-four-week-plan-cd8b376a9b85
+" - https://www.youtube.com/watch?v=XA2WjJbmmoM&t=408s
+" - https://github.com/dougblack/dougblack.io/blob/master/markdown/a-good-vimrc.md
+" }}}
+
+" {{{ env variables
+let $BASH_ENV = "~/.bash_aliases_custom_scripts"
+                                       " load custom aliases in non-interactive shell
+                                       " https://stackoverflow.com/a/19819036
+set path+=**                           " search down into subfolders
+                                       " provides tab-completion for all file related tasks
+" }}}
+
+" {{{ view/edit options
+syntax on
+set termguicolors                      " use full 24-bit color
+set number                             " show line numbers
+set autoindent                         " automatic indent
+set foldmethod=syntax                  " syntax based folding
+set nofoldenable                       " don't open file in folds
+set cursorline                         " highlight the line under cursor
+set laststatus=2                       " show status bar
+set noshowmode                         " don't show mode
+set linebreak                          " don't break words
+set scrolloff=5                        " let 5 lines after cursor
+set showcmd                            " show commands
+set wildmenu                           " display all matching files when we tab-complete
+set tabstop=4                          " tab size in columns
+set shiftwidth=4                       " indentation size
+                                       " https://medium.com/@arisweedler/tab-settings-in-vim-1ea0863c5990
+set noexpandtab                        " don't insert spaces, default
+set backspace=indent,eol,start         " get backspace to work on these situations
+" }}}
+
+" {{{ keybindings
+" Press Ctrl + C in
+"   VISUAL mode to copy selected block
+"   NORMAL mode to copy the suffix of the buffer from cursor [cursor, G$]
+"               to copy all press gg then Ctrl + C
+vnoremap <C-c> "+y
+nnoremap <C-c> vG$"+y
+" Ctrl + A in N selects all
+nnoremap <C-a> ggvG$
+" Alt + Up moves current/selected line(s) up
+" Alt + Down moves current/selected line(s) down
+" Caution for INSERT: don't keep cursor on EOL
+nnoremap <A-Up> :m -- <CR>
+nnoremap <A-Down> :m + <CR>
+inoremap <A-Up> <Esc> :m -- <CR>
+inoremap <A-Down> <Esc> :m + <CR>
+vnoremap <A-Up> :m '<-- <CR> gv
+vnoremap <A-Down> :m '>+ <CR> gv
+" ;s to toggle hlsearch
+nnoremap <silent> ;s :set hlsearch!<CR>
+" indenting visual block keeps the selection
+vnoremap > >gv
+vnoremap < <gv
+" }}}
+
+" {{{ terminal mode
+" Esc Esc to get into NORMAL mode in terminal
+" https://github.com/vim/vim/issues/2216
+tnoremap <Esc><Esc> <C-\><C-n>
+" }}}
+
+" {{{ Command Mode options
+" https://vi.stackexchange.com/questions/27399/whats-t-te-and-t-ti-added-by-vim-8
+let &t_TI = ""
+let &t_TE = ""
+" }}}
+
+"{{{ Plugin Settings (General)
+filetype plugin on
+" }}}
+
+" {{{ cpp settings
+" F5 to write, compile and run C++ file using custom ccr command
+autocmd filetype cpp nnoremap <F5> :w <bar> :!ccr % <CR>
+autocmd filetype cpp nnoremap <F4> :w <bar> :!ccr % in out <CR>
+autocmd filetype cpp nnoremap <F3> :w <bar> :!ccr % in <CR>
+autocmd filetype cpp nnoremap <F9> :w <bar> :!cd %:p:h && ./test.sh <CR>
+autocmd filetype cpp nnoremap <S-F5> :w <bar> :!ccgl % <CR>
+autocmd filetype cpp nnoremap <S-F9> :w <bar> :!./%:r <CR>
+" }}}
+
+" {{{ python settings
+autocmd filetype python nnoremap <F5> :w <bar> exec '!python3 '.shellescape('%') <CR>
+autocmd filetype python set foldmethod=indent
+" }}}
+
+" {{{ html settings
+autocmd filetype html nnoremap <F5> :w <bar> exec '!firefox '.shellescape('%') <CR>
+" }}}
+
+" {{{ Tcl/Tk settings
+autocmd filetype tcl nnoremap <F5> :w <bar> exec '!ns '.shellescape('%') <CR>
+" }}}
+
+" {{{ insert 2 spaces instead of tabs in some files
+augroup space_not_tabs
+	autocmd!
+	autocmd filetype html,css,yaml,xml,json,sh set tabstop=2 shiftwidth=2 expandtab
+augroup END
+" }}}
+
+" {{{ vim script settings
+autocmd filetype vim set foldmethod=marker
+" }}}
+
+" {{{ Lightline stuffs
+let g:lightline = {
+    \ 'colorscheme' : 'onedark',
+    \ }
+" }}}
+
+" {{{ Onedark Color Scheme stuffs
+packadd! onedark.vim
+let g:onedark_hide_endofbuffer = 1
+let g:onedark_termcolors = 256
+let g:onedark_terminal_italics = 1
+colorscheme onedark
+" }}}
+
+" {{{ Commentary stuffs
+autocmd FileType cpp setlocal commentstring=//\ %s
+autocmd FileType java setlocal commentstring=//\ %s
+autocmd FileType python setlocal commentstring=#\ %s
+autocmd FileType sh setlocal commentstring=#\ %s
+autocmd FileType vim setlocal commentstring=\"\ %s
+autocmd FileType html setlocal commentstring=<!--\ %s\ -->
+" }}}
+
+" {{{ vim-go stuffs
+" https://github.com/fatih/vim-go
+" let g:go_bin_path = #"/usr/local/go/bin"
+" }}}
