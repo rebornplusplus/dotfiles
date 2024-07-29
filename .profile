@@ -12,7 +12,7 @@
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+        . "$HOME/.bashrc"
     fi
 fi
 
@@ -52,24 +52,3 @@ if [ -f "$HOME/.cargo" ]; then
 fi
 
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-# Use RALT as LEFT and RCTL as RIGHT since the laptop keyboard's
-# LEFT and RIGHT arrow keys are not working properly.
-# Ref: https://unix.stackexchange.com/a/65600
-# Additionally, disable the LEFT and RIGHT arrow keys for good measure.
-if [ -e "$HOME/.xkb/keymap/mykbd" ]; then
-  xkbcomp -I$HOME/.xkb ~/.xkb/keymap/mykbd $DISPLAY 2> /dev/null
-  xmodmap -e 'keycode 113='   # Disable LEFT arrow key
-  xmodmap -e 'keycode 114='   # Disable RIGHT arrow key
-fi
-#
-# To disconnect latptop's internal keyboard, type:
-#   xinput float "AT Translated Set 2 keyboard"
-# Read here: https://askubuntu.com/questions/160945/is-there-a-way-to-disable-a-laptops-internal-keyboard
-
-# Manage dotfiles with git bare repo.
-# Ref: https://news.ycombinator.com/item?id=11071754
-if [ -d "$HOME/.cfg" ]; then
-  alias cfg='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-  # cfg config status.showUntrackedFiles no
-fi
