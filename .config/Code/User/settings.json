@@ -1,0 +1,86 @@
+{
+    "window.titleBarStyle": "custom",
+
+    "editor.fontFamily": "Ubuntu Mono",
+    "editor.fontSize": 14,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": false,
+    "editor.detectIndentation": true,
+    "editor.minimap.enabled": false,
+    "editor.rulers": [
+        80
+    ],
+
+    "workbench.colorTheme": "One Dark Pro Darker",
+    "workbench.startupEditor": "none",
+
+    "files.autoSave": "afterDelay",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+
+    // Show unified diff
+    "diffEditor.renderSideBySide": false,
+
+    // VSCodeVim settings
+    "vim.normalModeKeyBindingsNonRecursive": [
+        // https://github.com/VSCodeVim/Vim/issues/8157#issuecomment-1426704638
+        // {
+        //     "before": [
+        //         "u"
+        //     ],
+        //     "commands": [
+        //         "undo"
+        //     ]
+        // },
+        // {
+        //     "before": [
+        //         "c-r"
+        //     ],
+        //     "commands": [
+        //         "redo"
+        //     ]
+        // },
+        {
+            "before": [":", "w"],
+            "commands": [
+                "workbench.action.files.save",
+            ]
+        },
+        // Ctrl + P launches the quick open
+        {
+            "before": [
+                "c-p",
+            ],
+            "commands": [
+                "workbench.action.quickOpen",
+            ]
+        }
+    ],
+    "vim.textwidth": 80,
+
+
+    // Go(lang) settings
+    "go.lintOnSave": "package",
+    "go.formatTool": "gofmt",
+    "[go]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+    "go.toolsManagement.autoUpdate": true,
+
+    // Python settings
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.insertSpaces": true
+    },
+    "python.analysis.typeCheckingMode": "standard",
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "-l 120"
+    ],
+    "python.linting.lintOnSave": true,
+}
