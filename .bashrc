@@ -115,4 +115,9 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# Added by rustup.rs.
 . "$HOME/.cargo/env"
+
+# Include alacritty bash completion.
+source ~/.bash_completion/alacritty
